@@ -35,8 +35,14 @@
 
 </body>
 <script>
-    document.getElementById('btn-listar').addEventListener('click', function() {
-    document.getElementById('background').style.display = 'block';
+document.getElementById('btn-listar').addEventListener('click', function() {
+    var background = document.getElementById('background');
+    if (background.style.display === 'none' || background.style.display === '') {
+        background.style.display = 'block';
+    } else {
+        background.style.display = 'none';
+    }
 });
+
 </script>
 </html>

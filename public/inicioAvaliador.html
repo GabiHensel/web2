@@ -14,10 +14,34 @@
         <div id="background">
             <div class="article-list">
                 <ul id="article-list">
-                  <!-- Aqui serão inseridos dinamicamente os artigos -->
+                    <li>
+                        <div>
+                            <h3>Título</h3>
+                            <p><strong>Resumo:</strong></p>
+                            <p><strong>Autores:</strong></p>
+                            <p><strong>Status:</strong></p>
+                            <p><strong>Nota:</strong></p>
+                            <p><strong>Link:</strong> <a>Ver artigo</a></p>
+                        </div>
+                        <div class="article-buttons">
+                            <button class="edit-button" data-id="${article.id}">Editar</button>
+                            <button class="delete-button" data-id="${article.id}">Deletar</button>  
+                        </div>                     
+                    </li>
                 </ul>
+            </div>
         </div>
     </div>
 </body>
+<script>
+    document.getElementById('btn-listar').addEventListener('click', function() {
+    var background = document.getElementById('background');
+    if (background.style.display === 'none' || background.style.display === '') {
+        background.style.display = 'block';
+    } else {
+        background.style.display = 'none';
+    }
+});
 
+</script>
 </html>
