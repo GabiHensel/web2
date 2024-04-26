@@ -1,0 +1,65 @@
+#bc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#background {
+    background-color: white;
+    max-width: 700px; 
+    width: 90%;
+    height: auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 2px solid #D6DEE2;
+    border-radius: 10px;
+    font-family: Helvetica;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#titulo{
+    color: black;
+    margin: 10%;
+}
+
+#inputs{
+    margin:5% auto;
+    width: 60%;
+}
+
+#inputs input{
+    display: block;
+    margin: 0 auto; 
+    margin-bottom: 5%; 
+    width: 100%; 
+    max-width: 300px;
+    text-align: left;
+    border-radius: 5px; 
+    border: 2px solid #D6DEE2;
+}
+
+#botao{
+    display: block; 
+    margin: 3% auto; 
+    width: 50%; 
+    height: 35px; 
+    font-size: 16px;
+    border: none; 
+    background-color: #4CAF50; 
+    color: white; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+#tituloSistema{
+    font-family: Helvetica;
+    color: #4CAF50;
+    font-size: 50px;
+    text-align: center;
+    margin-top: 10%;
+}

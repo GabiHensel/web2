@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projeto web 2</title>
+    <link rel="stylesheet" type="text/css" href="inicio.css">
+</head>
+<body>
+    <div id="inicio">
+        <div id="menu">
+            <label id="SAA">SAA</label>
+            <button class="menu-btn" id="btn-listar">listar artigos</button>
+            <button class="menu-btn" id="btn-enviar">enviar artigo</button>
+            <button class="menu-btn" id="btn-sair">sair</button>
+        </div>
+        <div id="background">
+            <div class="article-list">
+                <ul id="article-list">
+                    <li>
+                        <div>
+                            <h3>Título</h3>
+                            <p><strong>Resumo:</strong></p>
+                            <p><strong>Autores:</strong></p>
+                            <p><strong>Status:</strong></p>
+                            <p><strong>Nota:</strong></p>
+                            <p><strong>Link:</strong> <a>Ver artigo</a></p>
+                        </div>
+                        <div class="article-buttons">
+                            <button class="edit-button" data-id="${article.id}">Editar</button>
+                            <button class="delete-button" data-id="${article.id}">Deletar</button>  
+                        </div>                     
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+document.getElementById('btn-listar').addEventListener('click', function() {
+    document.getElementById('background').style.display = 'block';
+});
+</script>
+</html>
