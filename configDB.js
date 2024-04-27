@@ -3,7 +3,7 @@ const UserModel = require('./models/user');
 const ArticleModel = require('./models/article');
 const ReviewModel = require('./models/review');
 
-const sequelize = new Sequelize('web2', 'postgres', 'gabi123', {
+const sequelize = new Sequelize('web2', 'postgres', 'postgres', {
     host: 'localhost',
     dialect: 'postgres',
 });

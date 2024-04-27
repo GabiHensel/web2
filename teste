@@ -1,0 +1,26 @@
+// Importe o módulo que contém a função getAllArticles
+const { sequelize, User, Article, Review, getAllArticles } = require('./configDB');
+
+// Função para testar getAllArticles
+async function testGetAllArticles() {
+    try {
+        // Conecte-se ao banco de dados
+        await sequelize.authenticate();
+        console.log('Conexão estabelecida com sucesso.');
+
+        // Chame a função getAllArticles para obter todos os artigos
+        const articles = await getAllArticles();
+
+        // Exiba os artigos retornados
+        console.log('Artigos encontrados:', articles);
+    } catch (error) {
+        console.error('Erro ao buscar artigos:', error);
+    } finally {
+        // Feche a conexão com o banco de dados
+        await sequelize.close();
+        console.log('Conexão com o banco de dados encerrada.');
+    }
+}
+
+// Chame a função de teste
+testGetAllArticles();
