@@ -15,20 +15,7 @@
         <div id="background">
             <div class="article-list">
                 <ul id="article-list">
-                    <li>
-                        <div>
-                            <h3>Título</h3>
-                            <p><strong>Resumo:</strong></p>
-                            <p><strong>Autores:</strong></p>
-                            <p><strong>Status:</strong></p>
-                            <p><strong>Nota:</strong></p>
-                            <p><strong>Link:</strong> <a>Ver artigo</a></p>
-                        </div>
-                        <div class="article-buttons">
-                            <button class="edit-button" data-id="${article.id}">Editar</button>
-                            <button class="delete-button" data-id="${article.id}">Deletar</button>  
-                        </div>                     
-                    </li>
+                   
                 </ul>
             </div>
         </div>
@@ -39,6 +26,40 @@ document.getElementById('btn-listar').addEventListener('click', function() {
     var background = document.getElementById('background');
     if (background.style.display === 'none' || background.style.display === '') {
         background.style.display = 'block';
+        fetch('/articles')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(articles => {
+                if (Array.isArray(articles)) {
+                    const articleList = document.getElementById('article-list');
+                    articleList.innerHTML = '';
+                    articles.forEach(article => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <div>
+                                <h3>${article.titulo}</h3>
+                                <p><strong>Resumo:</strong> ${article.resumo}</p>
+                                <p><strong>Autores:</strong> ${article.authors.map(author => author.nome).join(', ')}</p>
+                                <p><strong>Status:</strong> ${article.status}</p>
+                                <p><strong>Nota:</strong> ${article.nota === null ? 'Artigo em avaliação' : article.nota}</p>
+                                <p><strong>Link:</strong> <a href="${article.link}">Ver artigo</a></p>
+                            </div>
+                            <div class="article-buttons">
+                                <button class="edit-button" data-id="${article.id}">Editar</button>
+                                <button class="delete-button" data-id="${article.id}">Deletar</button>  
+                            </div>
+                        `;
+                        articleList.appendChild(li);
+                    });
+                } else {
+                    console.error('Error: articles is not an array');
+                }
+            })
+            .catch(error => console.error('Error:', error));
     } else {
         background.style.display = 'none';
     }

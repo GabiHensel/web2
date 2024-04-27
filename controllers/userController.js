@@ -1,4 +1,4 @@
-const { Article, User, Review } = require('../configDB.js');
+const { User } = require('../configDB.js');
 
 const UserController = {
     // Criar um novo usuário
