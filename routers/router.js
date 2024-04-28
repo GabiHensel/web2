@@ -28,10 +28,8 @@ router.get('/articles', ArticleController.getAll);
 router.put('/articles/:id', ArticleController.update);
 
 // Rota para obter todos os usuários
-router.get('/users', UserController.getAll);
+router.get('/users', UserController.getAllavaliadores);
 
-// Rota para obter todos os usuários com tipo "avaliador"
-router.get('/avaliadores', UserController.getAllEvaluators);
   
 
 
