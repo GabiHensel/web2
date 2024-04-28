@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     Article.associate = (models) => {
       Article.belongsToMany(models.User, { through: 'UserArticle', as: 'authors', foreignKey: 'articleId' });
       Article.belongsToMany(models.User, { through: 'Review', as: 'reviewers', foreignKey: 'articleId' });
+      Article.belongsToMany(models.User, { as: 'authors', through: 'UserArticle' });
+       Article.belongsToMany(models.User, { as: 'evaluators', through: 'UserArticle' });
+       Article.belongsToMany(models.User, { through: 'ArticleEvaluator', as: 'evaluators' });
     };
+    
   
     return Article;
   };

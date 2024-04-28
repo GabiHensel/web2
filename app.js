@@ -1,48 +1,55 @@
 const { sequelize, User, Article, Review } = require('./configDB.js');
 const path = require('path');
 const express = require('express');
+const router = require('./routers/router.js');
+
 const app = express();
-app.use(express.static(path.join(__dirname, 'public')));
 const port = 3000;
-const router = require('./routers/router.js'); 
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 sequelize.sync()
     .then(async () => {
-        console.log('Tabelas criadas com sucesso');
+        console.log('Tabelas sincronizadas com sucesso');
 
-        // 1. Crie o autor
-        const [user, createdUser] = await User.findOrCreate({
-            where: { login: 'admin' },
-            defaults: { nome: 'Autor', email: 'admin@example.com', senha: 'admin', tipo: 'Autor' }
-        });
-        console.log('Usuário criado:', user.get({ plain: true }));
+        // Criação do autor, avaliador, artigo e revisão
+        try {
+            const [author, createdAuthor] = await User.findOrCreate({
+                where: { login: 'teste' },
+                defaults: { nome: 'Yara', email: 'admin@example.com', senha: 'admin', tipo: 'Administrador' }
+            });
+            console.log('Autor criado:', author.get({ plain: true }));
 
-        // 2. Crie o artigo
-        const [article, createdArticle] = await Article.findOrCreate({
-            where: { titulo: 'Artigo Exemplo' },
-            defaults: { resumo: 'Este é um artigo de exemplo.', link: 'http://example.com/artigo.pdf', status: 'Em revisão' }
-        });
-        console.log('Artigo criado:', article.get({ plain: true }));
+            const [evaluator, createdEvaluator] = await User.findOrCreate({
+                where: { login: 'teste2' },
+                defaults: { nome: 'Sabryna', email: 'evaluator@example.com', senha: 'evaluator', tipo: 'Avaliador' }
+            });
+            console.log('Avaliador criado:', evaluator.get({ plain: true }));
 
-        // 3. Associe o autor ao artigo
-        await article.addAuthor(user); // Assumindo que a associação entre artigo e autor seja "addAuthor"
-        console.log('Autor associado ao artigo com sucesso.');
+            const [article, createdArticle] = await Article.findOrCreate({
+                where: { titulo: 'Artigo Exemplo' },
+                defaults: { resumo: 'Este é um artigo de exemplo.', link: 'http://example.com/artigo.pdf', status: 'Em revisão' }
+            });
+            console.log('Artigo criado:', article.get({ plain: true }));
 
-        // Se precisar de mais de um autor, basta repetir o passo 3 para cada autor.
+            await article.addAuthor(author);
+            console.log('Autor associado ao artigo com sucesso.');
 
-        // 4. Crie a revisão
-        const [review, createdReview] = await Review.findOrCreate({
-            where: { nota1: 5, nota2: 5 },
-            defaults: { userId: user.id, articleId: article.id }
-        });
-        console.log('Revisão criada:', review.get({ plain: true }));
-        
+            await article.addEvaluator(evaluator);
+            console.log('Avaliador associado ao artigo com sucesso.');
+
+            const [review, createdReview] = await Review.findOrCreate({
+                where: { nota1: 5, nota2: 5 },
+                defaults: { userId: author.id, articleId: article.id }
+            });
+            console.log('Revisão criada:', review.get({ plain: true }));
+        } catch (error) {
+            console.error('Erro ao criar ou associar dados:', error);
+        }
     })
     .catch(err => console.log('Erro ao sincronizar o banco de dados:', err));
 
-
-    app.use('/', router);      
-
-      app.listen(port, () => {
-        console.log(`Servidor rodando na porta ${port}`);
-      });
+app.use('/', router);      
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+});

@@ -1,4 +1,4 @@
-const { User } = require('../configDB.js');
+const { User } = require('../configDB');
 
 const UserController = {
     // Criar um novo usuário
@@ -67,7 +67,25 @@ const UserController = {
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
-    }
+    },
+
+    // Método para obter todos os avaliadores
+    getAllAvaliadores: async (req, res) => {
+        try {
+            const { tipo } = req.query;
+            let users;
+    
+            if (tipo && tipo.toLowerCase() === 'avaliador') {
+                users = await User.findAll({ where: { tipo: 'Avaliador' } });
+            } else {
+                users = await User.findAll();
+            }
+    
+            res.status(200).json(users);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    },
 };
 
 module.exports = UserController;
